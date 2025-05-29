@@ -32,16 +32,25 @@ def get_customer_receivables(customer):
     </tr>
     '''
     # Add data rows
+    total_outstanding = 0.0
     for row in result:
         if isinstance(row, dict):
 
             html += f'''<tr>
                 <td>{row.get("posting_date")}</td>
                 <td>{row.get("voucher_no")}</td>
-                <td>{row.get("outstanding")}</td>
-                <td>{row.get("sales_person")}</td>
+                <td>{format(row.get("outstanding"), '%.2f')}</td>
+                <td>{row.get("sales_person") or ""}</td>
             </tr>
             '''
+            total_outstanding = total_outstanding + row.get("outstanding", 0.0)
+
+    html += f'''<tr>
+        <td></td>
+        <td class="text-center"><b>Total</b></td>
+        <td class="text-right"><b>{ format(total_outstanding, '%.2f') }</b></td>
+        <td></td>
+    </tr>'''
 
     # End HTML table
     html += '</table>'
