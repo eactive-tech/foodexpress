@@ -74,10 +74,12 @@ app_license = "mit"
 # ----------
 
 # add methods and filters to jinja environment
-# jinja = {
-# 	"methods": "foodexpress.utils.jinja_methods",
-# 	"filters": "foodexpress.utils.jinja_filters"
-# }
+jinja = {
+	"methods": [
+        "foodexpress.foodexpress.jinja.get_customer_receivables"
+        ]
+	# "filters": "foodexpress.utils.jinja_filters"
+}
 
 # Installation
 # ------------
