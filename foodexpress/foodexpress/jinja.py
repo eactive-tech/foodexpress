@@ -39,8 +39,8 @@ def get_customer_receivables(customer):
             html += f'''<tr>
                 <td>{row.get("posting_date")}</td>
                 <td>{row.get("voucher_no")}</td>
-                <td>{format(row.get("outstanding"), '%.2f')}</td>
-                <td>{row.get("sales_person") or ""}</td>
+                <td class="text-right">{frappe.format(row.get("outstanding"), {'fieldtype': 'Currency'})}</td>
+                <td>{frappe.db.get_value("Sales Invoice", row.get("voucher_no"), "custom_salesman") or "" if row.get("voucher_type") == "Sales Invoice" else ""}</td>
             </tr>
             '''
             total_outstanding = total_outstanding + row.get("outstanding", 0.0)
@@ -48,7 +48,7 @@ def get_customer_receivables(customer):
     html += f'''<tr>
         <td></td>
         <td class="text-center"><b>Total</b></td>
-        <td class="text-right"><b>{ format(total_outstanding, '%.2f') }</b></td>
+        <td class="text-right"><b>{frappe.format(total_outstanding, {'fieldtype': 'Currency'})}</b></td>
         <td></td>
     </tr>'''
 
