@@ -1,12 +1,12 @@
 import frappe
 
-def get_customer_receivables(customer):
+def get_customer_receivables(customer, posting_date=frappe.utils.today()):
     report = frappe.call(
         "frappe.desk.query_report.run",
         report_name = "Accounts Receivable",
         filters  = {
             "company": frappe.defaults.get_defaults().get("company"),
-            "report_date": frappe.utils.today(),
+            "report_date": posting_date,
             "party_type": "Customer",
             "party": [customer],
             "ageing_based_on": "Due Date",
